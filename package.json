@@ -1,0 +1,58 @@
+{
+  "name": "react-metamask",
+  "version": "0.1.0",
+  "description": "react metamask",
+  "main": "dist/index.cjs.js",
+  "module": "dist/index.esm.js",
+  "sideEffects": false,
+  "types": "dist/typings/index.d.ts",
+  "scripts": {
+    "build": "npm run build:js && npm run build:types",
+    "build:types": "tsc -p tsconfig.build.json",
+    "build:js": "rollup -c rollup.config.js",
+    "lint": "npm run lint:format && npm run lint:js",
+    "lint:format": "prettier --check \"src/**/*\"",
+    "lint:js": "eslint src/**",
+    "format": "prettier --write \"src/**/*\""
+  },
+  "devDependencies": {
+    "@babel/plugin-transform-runtime": "^7.17.0",
+    "@babel/preset-env": "^7.16.11",
+    "@babel/preset-react": "^7.16.7",
+    "@babel/preset-typescript": "^7.16.7",
+    "@rollup/plugin-babel": "^5.3.1",
+    "@rollup/plugin-commonjs": "^21.1.0",
+    "@rollup/plugin-node-resolve": "^13.2.1",
+    "@types/react": "^18.0.5",
+    "@types/react-dom": "^18.0.1",
+    "@typescript-eslint/eslint-plugin": "^5.19.0",
+    "@typescript-eslint/parser": "^5.19.0",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-react": "^7.29.4",
+    "eslint-plugin-react-hooks": "^4.4.0",
+    "prettier": "^2.6.2",
+    "react": "^18.0.0",
+    "react-dom": "^18.0.0",
+    "rollup": "^2.70.2",
+    "rollup-plugin-delete": "^2.0.0",
+    "rollup-plugin-node-externals": "^4.0.0",
+    "typescript": "^4.6.3",
+    "@babel/core": "^7.17.9",
+    "@babel/runtime": "^7.17.9"
+  },
+  "peerDependencies": {
+    "react": ">=16.12.0",
+    "react-dom": ">=16.12.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tridungbk2010/react-metamask.git"
+  },
+  "keywords": [],
+  "author": "Chris Ho",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/tridungbk2010/react-metamask/issues"
+  },
+  "homepage": "https://github.com/tridungbk2010/react-metamask#readme"
+}
