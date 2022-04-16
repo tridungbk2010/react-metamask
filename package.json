@@ -1,7 +1,7 @@
 {
-  "name": "react-metamask",
-  "version": "0.1.0",
-  "description": "react metamask",
+  "name": "react-web3-metamask",
+  "version": "0.2.0",
+  "description": "react web3 metamask",
   "main": "dist/index.cjs.js",
   "module": "dist/index.esm.js",
   "sideEffects": false,
@@ -42,7 +42,8 @@
   },
   "peerDependencies": {
     "react": ">=16.12.0",
-    "react-dom": ">=16.12.0"
+    "react-dom": ">=16.12.0",
+    "ethers": ">=5.6.4"
   },
   "repository": {
     "type": "git",
@@ -54,5 +55,9 @@
   "bugs": {
     "url": "https://github.com/tridungbk2010/react-metamask/issues"
   },
-  "homepage": "https://github.com/tridungbk2010/react-metamask#readme"
+  "homepage": "https://github.com/tridungbk2010/react-metamask#readme",
+  "dependencies": {
+    "@metamask/onboarding": "^1.0.1",
+    "ethers": "^5.6.4"
+  }
 }
