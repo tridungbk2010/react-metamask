@@ -34,6 +34,7 @@ type ContextType = {
   provider?: any;
   signer?: Signer;
   getContract?: (address: string, abi: Array<any>) => any;
+  getSignature?: (msgConst: string) => string;
 };
 
 const Context = createContext<ContextType>({
@@ -142,6 +143,35 @@ export const MetamaskProvider = ({ children }: { children: ReactNode }) => {
     }
   }, []);
 
+  useEffect(() => {
+    if (MetaMaskOnboarding.isMetaMaskInstalled()) {
+    }
+  }, [accounts]);
+
+  const getSignature = useCallback(
+    (msg_env: string) => {
+      if (!MetaMaskOnboarding.isMetaMaskInstalled()) {
+        return '';
+      }
+      let rs = '';
+      const msg = ethers.utils.hexlify(msg_env);
+      window.ethereum
+        .request({
+          method: 'eth_sign',
+          params: [accounts[0], msg],
+        })
+        .then((res: any) => {
+          rs = JSON.stringify(res);
+        })
+        .catch((err: any) => {
+          console.log('err', err);
+          rs = '';
+        });
+      return rs;
+    },
+    [accounts]
+  );
+
   function getContract(contractAddress: string, abi: Array<any>) {
     if (
       !contractRef.current &&
@@ -166,6 +196,7 @@ export const MetamaskProvider = ({ children }: { children: ReactNode }) => {
         provider: providerRef.current,
         signer: providerRef.current?.getSigner(),
         getContract,
+        getSignature,
       }}
     >
       {children}
