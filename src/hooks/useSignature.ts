@@ -1,13 +1,13 @@
 import { useEffect, useRef, useState } from 'react';
 import MetaMaskOnboarding from '@metamask/onboarding';
-import { ethers } from 'ethers';
 
 export default function useSignature(
-  signText: string,
+  personalSignText: string,
   account: string,
   callback?: (signature: string | null, error?: any) => void
 ) {
   const [loading, setLoading] = useState(false);
+  const [signature, setSignature] = useState('');
 
   const savedCallback = useRef<any>(null);
 
@@ -17,14 +17,15 @@ export default function useSignature(
 
   useEffect(() => {
     if (MetaMaskOnboarding.isMetaMaskInstalled() && !!account) {
-      const msg = ethers.utils.keccak256(ethers.utils.toUtf8Bytes(signText));
+      const msg = `0x${Buffer.from(personalSignText, 'utf8').toString('hex')}`;
       setLoading(true);
       window.ethereum
         .request({
-          method: 'eth_sign',
+          method: 'personal_sign',
           params: [account, msg],
         })
         .then((res: string) => {
+          setSignature(res);
           if (savedCallback.current) {
             savedCallback.current(res);
           }
@@ -36,7 +37,7 @@ export default function useSignature(
           setLoading(false);
         });
     }
-  }, [account]);
+  }, [account, personalSignText]);
 
-  return { loading };
+  return { loading, signature };
 }
