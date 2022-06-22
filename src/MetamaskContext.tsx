@@ -141,7 +141,6 @@ export const MetamaskProvider = ({ children }: { children: ReactNode }) => {
         window.ethereum
           .request({ method: 'eth_requestAccounts' })
           .then((newAccounts: string[]) => {
-            setAccounts(newAccounts);
             const msg = `0x${Buffer.from(personalSignText, 'utf8').toString(
               'hex'
             )}`;
@@ -151,6 +150,7 @@ export const MetamaskProvider = ({ children }: { children: ReactNode }) => {
                 params: [newAccounts?.[0], msg],
               })
               .then((res: string) => {
+                setAccounts(newAccounts);
                 callback?.({ signature: res, account: newAccounts?.[0] });
               })
               .catch((err: any) => {
