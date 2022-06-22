@@ -29,3 +29,8 @@ export const NETWORKS: Record<NetworkName, Network> = {
     name: 'Rinkeby Test Network',
   },
 };
+
+export type SignatureProps = {
+  signature: string;
+  account: string;
+};

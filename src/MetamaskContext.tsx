@@ -8,7 +8,7 @@ import React, {
   useCallback,
 } from 'react';
 import MetaMaskOnboarding from '@metamask/onboarding';
-import { NetworkName } from './types';
+import { NetworkName, SignatureProps } from './types';
 import { ethers } from 'ethers';
 import type { Signer } from 'ethers';
 import { networkMapper } from './types';
@@ -34,6 +34,10 @@ type ContextType = {
   provider?: any;
   signer?: Signer;
   getContract?: (address: string, abi: Array<any>) => any;
+  connectAndGetSignature?: (
+    personalSignText: string,
+    callback: (params: SignatureProps | null, error?: any) => void
+  ) => void;
 };
 
 const Context = createContext<ContextType>({
@@ -128,6 +132,38 @@ export const MetamaskProvider = ({ children }: { children: ReactNode }) => {
     }
   }, []);
 
+  const connectAndGetSignature = useCallback(
+    (
+      personalSignText: string,
+      callback: (params: SignatureProps | null, error?: any) => void
+    ) => {
+      if (MetaMaskOnboarding.isMetaMaskInstalled()) {
+        window.ethereum
+          .request({ method: 'eth_requestAccounts' })
+          .then((newAccounts: string[]) => {
+            setAccounts(newAccounts);
+            const msg = `0x${Buffer.from(personalSignText, 'utf8').toString(
+              'hex'
+            )}`;
+            window.ethereum
+              .request({
+                method: 'personal_sign',
+                params: [newAccounts?.[0], msg],
+              })
+              .then((res: string) => {
+                callback?.({ signature: res, account: newAccounts?.[0] });
+              })
+              .catch((err: any) => {
+                callback?.(null, err);
+              });
+          });
+      } else {
+        onboarding.current?.startOnboarding();
+      }
+    },
+    []
+  );
+
   useEffect(() => {
     if (MetaMaskOnboarding.isMetaMaskInstalled()) {
       const signer = providerRef.current?.getSigner();
@@ -171,6 +207,7 @@ export const MetamaskProvider = ({ children }: { children: ReactNode }) => {
         provider: providerRef.current,
         signer: providerRef.current?.getSigner(),
         getContract,
+        connectAndGetSignature,
       }}
     >
       {children}
