@@ -1,4 +1,4 @@
-export type NetworkName = 'mainnet' | 'ropsten' | 'rinkeby';
+export type NetworkName = 'mainnet' | 'ropsten' | 'rinkeby' | 'goerli';
 
 export type Network = {
   hex: string;
@@ -10,6 +10,7 @@ export const networkMapper: Record<number, NetworkName> = {
   1: 'mainnet',
   3: 'ropsten',
   4: 'rinkeby',
+  5: 'goerli',
 };
 
 export const NETWORKS: Record<NetworkName, Network> = {
@@ -27,6 +28,11 @@ export const NETWORKS: Record<NetworkName, Network> = {
     hex: '0x4',
     decimal: 4,
     name: 'Rinkeby Test Network',
+  },
+  goerli: {
+    hex: '0x5',
+    decimal: 5,
+    name: 'Goerli Test Network',
   },
 };
 

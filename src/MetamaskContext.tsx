@@ -46,8 +46,6 @@ const Context = createContext<ContextType>({
 });
 
 export const MetamaskProvider = ({ children }: { children: ReactNode }) => {
-  const providerRef = useRef<any>(null);
-  const contractRef = useRef<any>(null);
   const [connection, setConnection] = useState<ConnectionEnum>(
     ConnectionEnum.NotConnected
   );
@@ -61,12 +59,6 @@ export const MetamaskProvider = ({ children }: { children: ReactNode }) => {
   useEffect(() => {
     if (!onboarding.current) {
       onboarding.current = new MetaMaskOnboarding();
-    }
-  }, []);
-
-  useEffect(() => {
-    if (!providerRef.current && MetaMaskOnboarding.isMetaMaskInstalled()) {
-      providerRef.current = new ethers.providers.Web3Provider(window.ethereum);
     }
   }, []);
 
@@ -166,7 +158,8 @@ export const MetamaskProvider = ({ children }: { children: ReactNode }) => {
 
   useEffect(() => {
     if (MetaMaskOnboarding.isMetaMaskInstalled()) {
-      const signer = providerRef.current?.getSigner();
+      const provider = new ethers.providers.Web3Provider(window.ethereum);
+      const signer = provider.getSigner();
       signer
         .getChainId()
         .then((chainId: number) => {
@@ -183,17 +176,17 @@ export const MetamaskProvider = ({ children }: { children: ReactNode }) => {
     }
   }, [accounts]);
 
-  function getContract(contractAddress: string, abi: Array<any>) {
-    if (
-      !contractRef.current &&
-      MetaMaskOnboarding.isMetaMaskInstalled() &&
-      !!providerRef.current
-    ) {
-      const signer = providerRef.current?.getSigner();
-      contractRef.current = new ethers.Contract(contractAddress, abi, signer);
-    }
-    return contractRef.current;
-  }
+  // function getContract(contractAddress: string, abi: Array<any>) {
+  //   if (
+  //     !contractRef.current &&
+  //     MetaMaskOnboarding.isMetaMaskInstalled() &&
+  //     !!providerRef.current
+  //   ) {
+  //     const signer = providerRef.current?.getSigner();
+  //     contractRef.current = new ethers.Contract(contractAddress, abi, signer);
+  //   }
+  //   return contractRef.current;
+  // }
 
   return (
     <Context.Provider
@@ -204,9 +197,6 @@ export const MetamaskProvider = ({ children }: { children: ReactNode }) => {
         account: accounts?.[0] || '',
         balance,
         networkName,
-        provider: providerRef.current,
-        signer: providerRef.current?.getSigner(),
-        getContract,
         connectAndGetSignature,
       }}
     >

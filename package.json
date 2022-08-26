@@ -21,21 +21,21 @@
     "@babel/preset-react": "^7.16.7",
     "@babel/preset-typescript": "^7.16.7",
     "@rollup/plugin-babel": "^5.3.1",
-    "@rollup/plugin-commonjs": "^21.1.0",
-    "@rollup/plugin-node-resolve": "^13.2.1",
-    "@types/react": "^18.0.5",
-    "@types/react-dom": "^18.0.1",
+    "@rollup/plugin-commonjs": "^22.0.2",
+    "@rollup/plugin-node-resolve": "^13.3.0",
+    "@types/react": "^18.0.17",
+    "@types/react-dom": "^18.0.6",
     "@typescript-eslint/eslint-plugin": "^5.19.0",
     "@typescript-eslint/parser": "^5.19.0",
     "eslint-config-prettier": "^8.5.0",
-    "eslint-plugin-react": "^7.29.4",
-    "eslint-plugin-react-hooks": "^4.4.0",
+    "eslint-plugin-react": "^7.31.0",
+    "eslint-plugin-react-hooks": "^4.6.0",
     "prettier": "^2.6.2",
-    "react": "^18.0.0",
-    "react-dom": "^18.0.0",
-    "rollup": "^2.70.2",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "rollup": "^2.78.1",
     "rollup-plugin-delete": "^2.0.0",
-    "rollup-plugin-node-externals": "^4.0.0",
+    "rollup-plugin-node-externals": "^4.1.1",
     "typescript": "^4.6.3",
     "@babel/core": "^7.17.9",
     "@babel/runtime": "^7.17.9"
@@ -58,6 +58,6 @@
   "homepage": "https://github.com/tridungbk2010/react-metamask#readme",
   "dependencies": {
     "@metamask/onboarding": "^1.0.1",
-    "ethers": "^5.6.4"
+    "ethers": "^5.7.0"
   }
 }
